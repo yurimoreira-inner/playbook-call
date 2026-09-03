@@ -163,7 +163,7 @@ td.g{color:#14512D} td.r{color:#8B4136}
 /* ===== camada web (não afeta o PDF) ===== */
 @media screen{
   html,body{background:#0A0A0A;margin:0;overflow-x:hidden}
-  body{scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh;scroll-behavior:smooth}
+  html{scroll-snap-type:y proximity;scroll-behavior:smooth}
   .slide{scroll-snap-align:center;margin:0 auto;box-shadow:0 20px 60px rgba(0,0,0,.5);
          flex:0 0 auto}
   #stage{display:flex;flex-direction:column;align-items:center;gap:24px;padding:24px 0}
@@ -194,7 +194,7 @@ td.g{color:#14512D} td.r{color:#8B4136}
     </div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
       <div class="eyebrow">Playbook oficial · v1.0</div>
-      <h1 style="font-size:60px;margin-top:18px">Roteiro Oficial<br>da Call</h1>
+      <h1 style="font-size:46px;margin-top:18px;white-space:nowrap">Roteiro Oficial da Call</h1>
       <p class="sub" style="font-size:19px;max-width:520px">Um produto. Uma dor. Uma decisão.<br>O único script da casa, bloco a bloco.</p>
     </div>
     <div style="font-size:12.5px;color:var(--gray2)">Material de estudo para novos consultores · Agosto 2026</div>
@@ -667,7 +667,9 @@ td.g{color:#14512D} td.r{color:#8B4136}
   }
   function go(i){
     cur = Math.max(0, Math.min(slides.length - 1, i));
-    slides[cur].scrollIntoView({behavior:'smooth', block:'center'});
+    var r = slides[cur].getBoundingClientRect();
+    var top = r.top + window.scrollY - Math.max(0, (window.innerHeight - r.height) / 2);
+    window.scrollTo({top: top, behavior:'smooth'});
     document.getElementById('cur').textContent = cur + 1;
     history.replaceState(null, '', '#' + (cur + 1));
   }
